@@ -30,7 +30,7 @@ public class ProdutoController {
     public ProdutoModel criarProduto (@RequestBody ProdutoModel produto){
         return produtoService.criarProduto(produto);
     }
-    @DeleteMapping("/deletar/{id}")
+    @DeleteMapping("/deletar/{id}   ")
     public void deletarProduto(@PathVariable Long id){
          produtoService.deletarProduto(id);
     }

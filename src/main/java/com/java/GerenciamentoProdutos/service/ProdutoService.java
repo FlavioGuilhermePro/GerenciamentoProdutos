@@ -1,11 +1,13 @@
 package com.java.GerenciamentoProdutos.service;
 
+import com.java.GerenciamentoProdutos.dto.ProdutoDTO;
 import com.java.GerenciamentoProdutos.model.ProdutoModel;
 import com.java.GerenciamentoProdutos.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -15,16 +17,41 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    public List<ProdutoModel> listarProdutos (){
-        return produtoRepository.findAll();
+    public List<ProdutoDTO> listarProdutos (){
+        return produtoRepository.findAll().stream()
+                .map( produto -> {
+                    ProdutoDTO dto = new ProdutoDTO();
+                    dto.setNome(produto.getNome());
+                    dto.setCategoria(produto.getCategoria());
+                    dto.setDescricao(produto.getDescricao());
+                    dto.setPreco(produto.getPreco());
+                    dto.setQuantidade(produto.getQuantidade());
+                    return dto;
+
+                }).collect(Collectors.toList());
     }
 
-    public Optional<ProdutoModel> listarProdutosId(Long id){
-        Optional<ProdutoModel> produtoModel = produtoRepository.findById(id);
-        return produtoModel;
+    public Optional<ProdutoDTO> listarProdutosId(Long id){
+        return produtoRepository.findById(id)
+                .map(produto -> {
+                    ProdutoDTO dto = new ProdutoDTO();
+                    dto.setNome(produto.getNome());
+                    dto.setCategoria(produto.getCategoria());
+                    dto.setDescricao(produto.getDescricao());
+                    dto.setPreco(produto.getPreco());
+                    dto.setQuantidade(produto.getQuantidade());
+                    return dto;
+                });
+
     }
 
-    public ProdutoModel criarProduto(ProdutoModel produto){
+    public ProdutoModel criarProduto(ProdutoDTO produtoDTO){
+        ProdutoModel produto = new ProdutoModel();
+        produto.setNome(produtoDTO.getNome());
+        produto.setCategoria(produtoDTO.getCategoria());
+        produto.setDescricao(produtoDTO.getDescricao());
+        produto.setPreco(produtoDTO.getPreco());
+        produto.setQuantidade(produtoDTO.getQuantidade());
         return produtoRepository.save(produto);
     }
 
