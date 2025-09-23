@@ -1,0 +1,12 @@
+2025-09-23 19:07:51.532235-03:00 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT [*]FROM TB_CATEGORIAS (id,nome)\000d\000aVALUES(1,'Eletronico')"; expected "INTO"; SQL statement:
+INSERT FROM TB_CATEGORIAS (id,nome)
+VALUES(1,'Eletronico') [42001-232]
+2025-09-23 19:08:03.121393-03:00 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT [*]FROM TB_CATEGORIAS (id,nome)\000d\000aVALUES(1,'Eletronico')"; expected "INTO"; SQL statement:
+INSERT FROM TB_CATEGORIAS (id,nome)
+VALUES(1,'Eletronico') [42001-232]
+2025-09-23 19:08:10.924698-03:00 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT [*]* FROM TB_CATEGORIAS (id,nome)\000d\000aVALUES(1,'Eletronico')"; expected "INTO"; SQL statement:
+INSERT * FROM TB_CATEGORIAS (id,nome)
+VALUES(1,'Eletronico') [42001-232]

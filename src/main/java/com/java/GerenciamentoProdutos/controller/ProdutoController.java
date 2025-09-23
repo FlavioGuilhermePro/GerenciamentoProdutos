@@ -3,6 +3,8 @@ package com.java.GerenciamentoProdutos.controller;
 import com.java.GerenciamentoProdutos.dto.ProdutoDTO;
 import com.java.GerenciamentoProdutos.model.ProdutoModel;
 import com.java.GerenciamentoProdutos.service.ProdutoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,10 +30,15 @@ public class ProdutoController {
     }
 
     @PostMapping("/criar")
-    public ProdutoModel criarProduto (@RequestBody ProdutoDTO produto){
-        return produtoService.criarProduto(produto);
+    public ResponseEntity<ProdutoModel> criarProduto (@RequestBody ProdutoDTO produto){
+        Optional<ProdutoModel> novoProduto = produtoService.criarProduto(produto);
+        if(novoProduto.isPresent()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(novoProduto.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-    @DeleteMapping("/deletar/{id}   ")
+    @DeleteMapping("/deletar/{id}")
     public void deletarProduto(@PathVariable Long id){
          produtoService.deletarProduto(id);
     }

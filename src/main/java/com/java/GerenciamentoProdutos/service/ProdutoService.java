@@ -51,10 +51,10 @@ public class ProdutoService {
 
     }
 
-    public ProdutoModel criarProduto(ProdutoDTO produtoDTO){
+    public Optional<ProdutoModel> criarProduto(ProdutoDTO produtoDTO){
         Optional<CategoriaModel> categoriaOptional = categoriaRepository.findById(produtoDTO.getCategoriaId());
         if(categoriaOptional.isEmpty()){
-            return null;
+            return Optional.empty();
         }
         CategoriaModel categoria = categoriaOptional.get();
         ProdutoModel produto = new ProdutoModel();
@@ -63,11 +63,17 @@ public class ProdutoService {
         produto.setPreco(produtoDTO.getPreco());
         produto.setQuantidade(produtoDTO.getQuantidade());
         produto.setCategoria(categoria);
-        return produtoRepository.save(produto);
+        return Optional.of(produtoRepository.save(produto));
     }
 
-    public void deletarProduto(Long id){
-        produtoRepository.deleteById(id);
+    public boolean deletarProduto(Long id){
+        if (produtoRepository.existsById(id)) {
+            produtoRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public Optional<ProdutoModel> atualizarProduto(Long id, ProdutoDTO produto){
