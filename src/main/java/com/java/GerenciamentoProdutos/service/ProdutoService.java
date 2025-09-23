@@ -71,19 +71,21 @@ public class ProdutoService {
     }
 
     public Optional<ProdutoModel> atualizarProduto(Long id, ProdutoDTO produto){
-        Optional<ProdutoModel> produtoOptional = produtoRepository.findById(id);
+        return produtoRepository.findById(id)
+                .flatMap(produtoExistente -> {
+                    Optional<CategoriaModel> categoriaOptional = categoriaRepository.findById(produto.getCategoriaId());
+                    if(categoriaOptional.isPresent()){
+                        produtoExistente.setNome(produto.getNome());
+                        produtoExistente.setCategoria(categoriaOptional.get());
+                        produtoExistente.setPreco(produto.getPreco());
+                        produtoExistente.setQuantidade(produto.getQuantidade());
+                        produtoExistente.setDescricao(produto.getDescricao());
+                        return Optional.of(produtoRepository.save(produtoExistente));
+                    } else {
+                        return Optional.empty();
+                    }
+                });
 
-        if(produtoOptional.isPresent()){
-            ProdutoModel produtoExistente = produtoOptional.get();
-            produtoExistente.setNome(produto.getNome());
-            produtoExistente.setCategoria(produto.getCategoria());
-            produtoExistente.setPreco(produto.getPreco());
-            produtoExistente.setQuantidade(produto.getQuantidade());
-            produtoExistente.setDescricao(produto.getDescricao());
-            ProdutoModel produtoAtualizado = produtoRepository.save(produtoExistente);
-            return Optional.of(produtoAtualizado);
-        } else {
-            return Optional.empty();
-        }
+
     }
 }
