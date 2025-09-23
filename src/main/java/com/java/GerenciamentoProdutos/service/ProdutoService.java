@@ -70,7 +70,7 @@ public class ProdutoService {
         produtoRepository.deleteById(id);
     }
 
-    public Optional<ProdutoModel> atualizarProduto(Long id, ProdutoModel produto){
+    public Optional<ProdutoModel> atualizarProduto(Long id, ProdutoDTO produto){
         Optional<ProdutoModel> produtoOptional = produtoRepository.findById(id);
 
         if(produtoOptional.isPresent()){
