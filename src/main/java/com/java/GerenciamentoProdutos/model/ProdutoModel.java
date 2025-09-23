@@ -18,8 +18,11 @@ public class ProdutoModel {
     private String nome;
     private String descricao;
     private double preco;
-    private String categoria;
     private int quantidade;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private CategoriaModel categoria;
 
 
 }

@@ -1,5 +1,6 @@
 package com.java.GerenciamentoProdutos.controller;
 
+import com.java.GerenciamentoProdutos.dto.ProdutoDTO;
 import com.java.GerenciamentoProdutos.model.ProdutoModel;
 import com.java.GerenciamentoProdutos.service.ProdutoService;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +18,17 @@ public class ProdutoController {
     }
 
     @GetMapping("/listar")
-    public List<ProdutoModel> listarProdutos(){
+    public List<ProdutoDTO> listarProdutos(){
         return produtoService.listarProdutos();
     }
 
     @GetMapping("/listar/{id}")
-    public Optional<ProdutoModel> listarId(@PathVariable Long id){
+    public Optional<ProdutoDTO> listarId(@PathVariable Long id){
         return produtoService.listarProdutosId(id);
     }
 
     @PostMapping("/criar")
-    public ProdutoModel criarProduto (@RequestBody ProdutoModel produto){
+    public ProdutoModel criarProduto (@RequestBody ProdutoDTO produto){
         return produtoService.criarProduto(produto);
     }
     @DeleteMapping("/deletar/{id}   ")
